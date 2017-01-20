@@ -17,3 +17,4 @@ class WeekSimple(Resource):
         # adds the week to weeks
         weeks[week_id] = request.form['data']
         return {week_id: weeks[week_id]}
+
