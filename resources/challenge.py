@@ -1,20 +1,29 @@
 from flask_restful import Resource
-from flask import request
+from flask_restful import reqparse
 
 challenges = {}
 
-class Challenge(Resource):
+
+parser = reqparse.RequestParser()
+parser.add_argument('id', help='Challenge id')
+parser.add_argument('title', help='Challenge title')
+
+
+class ChallengeList(Resource):
     def get(self):
         # return all challenges
         return challenges
+    
+    def put(self):
+        # adds the challenge to challenges
+        #challenges["cha"] = request.form['data']
+        args = parser.parse_args()
+        challenge = {args['id']: args['title']}
+        challenges[args['id']] = challenge
+        return challenge, 201
 
-class ChallengeSimple(Resource):
+class Challenge(Resource):
     def get(self, challenge_id):
         # return the challenge based on id
-        return {challenge_id: challenges[challenge_id]}
-
-    def put(self, challenge_id):
-        # adds the challenge to challenges
-        challenges[challenge_id] = request.form['data']
-        return {challenge_id: challenges[challenge_id]}
+        return challenges[challenge_id]
 
