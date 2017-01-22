@@ -13,7 +13,7 @@ def get_id():
     seq += 1
     return seq
 
-class ChallengeList(Resource):
+class Challenges(Resource):
     def get(self):
         # return all challenges
         return challenges
@@ -29,4 +29,9 @@ class Challenge(Resource):
     def get(self, challenge_id):
         # return the challenge based on id
         return challenges[challenge_id]
+        
+    def delete(self, challenge_id):
+        #delete the challenge
+        del challenges[challenge_id]
+        return '', 204
 
