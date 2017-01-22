@@ -5,8 +5,8 @@ challenges = {}
 
 
 parser = reqparse.RequestParser()
-parser.add_argument('id', type=list, location='json', help='Challenge id')
-parser.add_argument('title', type=list, location='json', help='Challenge title')
+parser.add_argument('id', location='json', help='Challenge id')
+parser.add_argument('title', location='json', help='Challenge title')
 
 
 class ChallengeList(Resource):
@@ -14,7 +14,7 @@ class ChallengeList(Resource):
         # return all challenges
         return challenges
     
-    def put(self):
+    def post(self):
         args = parser.parse_args()
         challenge = {"id": args['id'], "title": args['title']}
         challenges[args['id']] = challenge
