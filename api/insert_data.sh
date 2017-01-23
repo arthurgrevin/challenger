@@ -3,7 +3,7 @@
 #
 curl http://localhost:5000/challenges/ -H "Content-Type: application/json" -d '{"title": "My first challenge"}' -X POST
 curl http://localhost:5000/challenges/ -H "Content-Type: application/json" -d '{"title": "My second challenge"}' -X POST
-curl http://localhost:5000/challenges/ -H "Content-Type: application/json" -d '{"title": "My third challenge"}' -X POST
+curl http://localhost:5000/challenges/ -H "Content-Type: application/json" -d '{"title": "My third challenge", "days":3, "start_date":"2017-01-23"}' -X POST
 #
 # get all challenges
 # curl http://localhost:5000/challenges/
