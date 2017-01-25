@@ -37,7 +37,7 @@ class Challenges(Resource):
     def get(self):
         # return all challenges
         return challenges
-    
+        
     @marshal_with(challenge_fields, envelope='challenge')
     def post(self):
         args = parser.parse_args()
@@ -57,24 +57,21 @@ class Challenges(Resource):
         return challenge, 201
 
 
-
 def abort_if_challenge_doesnt_exist(challenge_id):
     if len([challenge for challenge in challenges if challenge['id'] == challenge_id]) == 0:
         abort(404, message="Challenge {} doesn't exist".format(challenge_id))
 
-class Challenge(Resource):
 
+class Challenge(Resource):
     @marshal_with(challenge_fields, envelope='challenge')
     def get(self, challenge_id):
         # return the challenge based on id
         abort_if_challenge_doesnt_exist(challenge_id)
-        
         return [challenge for challenge in challenges if challenge['id'] == challenge_id]
         
     def delete(self, challenge_id):
         # delete the challenge
         abort_if_challenge_doesnt_exist(challenge_id)
-        
         for challenge in challenges[:]:
             if challenge['id'] == challenge_id:
                 # do something with item
