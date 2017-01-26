@@ -74,7 +74,19 @@ class Challenge(Resource):
         abort_if_challenge_doesnt_exist(challenge_id)
         for challenge in challenges[:]:
             if challenge['id'] == challenge_id:
-                # do something with item
+                # remove challenge
                 challenges.remove(challenge)
+        return '', 204
+    
+    def put(self, challenge_id):
+        abort_if_challenge_doesnt_exist(challenge_id)
+        args = parser.parse_args()
+        for challenge in challenges[:]:
+            if challenge['id'] == challenge_id:
+                # update challenge
+                challenge['title'] = args['title']
+                challenge['days'] = args['days']
+                challenge['start_date'] = args['start_date']
+                challenge['end_date'] = args['end_date']
         return '', 204
 
