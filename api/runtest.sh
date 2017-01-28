@@ -1,1 +1,1 @@
-nosetests test.py --nocapture
+nosetests test.py --v
