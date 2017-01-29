@@ -7,7 +7,7 @@ seq = 0
 
 parser = reqparse.RequestParser()
 parser.add_argument('title', location = 'json', help = 'Challenge title')
-parser.add_argument('days', type = int, location = 'json', help = 'Number of days for the challenge')
+parser.add_argument('nb_days', type = int, location = 'json', help = 'Number of days for the challenge')
 parser.add_argument('start_date', type = lambda x: datetime.strptime(x, '%Y-%m-%d'), location = 'json', help = 'Challenge start date')
 parser.add_argument('end_date', type = lambda x: datetime.strptime(x, '%Y-%m-%d'), location = 'json', help = 'Challenge end date')
 
@@ -15,7 +15,7 @@ parser.add_argument('end_date', type = lambda x: datetime.strptime(x, '%Y-%m-%d'
 challenge_fields = {
     'id': fields.Integer,
     'title': fields.String,
-    'days': fields.Integer,
+    'nb_days': fields.Integer,
     'start_date': fields.DateTime(dt_format='rfc822'),
     'end_date': fields.DateTime(dt_format='rfc822')
 }
@@ -47,7 +47,7 @@ class Challenges(Resource):
         challenge = {
             "id": id, 
             "title": args['title'], 
-            "days": args['days'], 
+            "nb_days": args['nb_days'], 
             "start_date": args['start_date'],
             "end_date": args['end_date']
         }
