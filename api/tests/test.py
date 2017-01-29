@@ -1,7 +1,7 @@
 import json
 import nose
 from nose.tools import *
-from api import app
+from ..api import app
 
 test_app = app.test_client()
 
