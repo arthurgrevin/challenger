@@ -49,7 +49,8 @@ class Challenges(Resource):
             "title": args['title'], 
             "nb_days": args['nb_days'], 
             "start_date": args['start_date'],
-            "end_date": args['end_date']
+            "end_date": args['end_date'],
+            "days":[{"21/03/2017": False}]
         }
         
         # add to challenges
@@ -78,3 +79,10 @@ class Challenge(Resource):
                 challenges.remove(challenge)
         return '', 204
 
+class Days(Resource):
+
+    def get(self, challenge_id):
+        abort_if_challenge_doesnt_exist(challenge_id)
+        the_challenge = [challenge for challenge in challenges if challenge['id'] == challenge_id]
+        return challenge['days']
+    
