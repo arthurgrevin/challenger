@@ -1,9 +1,8 @@
 from flask_restful import Resource
 from flask_restful import reqparse, fields, marshal_with, abort
 from datetime import datetime
+import model.challenge_datasource as datasource
 
-challenges = []
-seq = 0
 
 parser = reqparse.RequestParser()
 parser.add_argument('title', location = 'json', help = 'Challenge title')
@@ -19,29 +18,23 @@ challenge_fields = {
     'start_date': fields.DateTime(dt_format='rfc822'),
     'end_date': fields.DateTime(dt_format='rfc822')
 }
-    
+ 
+# marshaller
 challenge_list_fields = {
     fields.List(fields.Nested(challenge_fields)),
 }
-
-
-# sequence of ids
-def get_next_id():
-    global seq
-    seq += 1
-    return seq
 
 
 class Challenges(Resource):
     @marshal_with(challenge_fields, envelope='challenge')
     def get(self):
         # return all challenges
-        return challenges
+        return datasource.challenges
         
     @marshal_with(challenge_fields, envelope='challenge')
     def post(self):
         args = parser.parse_args()
-        id = get_next_id()
+        id = datasource.get_next_id()
         
         # create challenge object
         challenge = {
@@ -54,12 +47,12 @@ class Challenges(Resource):
         }
         
         # add to challenges
-        challenges.append(challenge)
+        datasource.challenges.append(challenge)
         return challenge, 201
 
 
 def abort_if_challenge_doesnt_exist(challenge_id):
-    if len([challenge for challenge in challenges if challenge['id'] == challenge_id]) == 0:
+    if len([challenge for challenge in datasource.challenges if challenge['id'] == challenge_id]) == 0:
         abort(404, message="Challenge {} doesn't exist".format(challenge_id))
 
 
@@ -68,12 +61,12 @@ class Challenge(Resource):
     def get(self, challenge_id):
         # return the challenge based on id
         abort_if_challenge_doesnt_exist(challenge_id)
-        return [challenge for challenge in challenges if challenge['id'] == challenge_id]
+        return [challenge for challenge in datasource.challenges if challenge['id'] == challenge_id]
         
     def delete(self, challenge_id):
         # delete the challenge
         abort_if_challenge_doesnt_exist(challenge_id)
-        for challenge in challenges[:]:
+        for challenge in datasource.challenges[:]:
             if challenge['id'] == challenge_id:
                 # do something with item
                 challenges.remove(challenge)
@@ -83,6 +76,6 @@ class Days(Resource):
 
     def get(self, challenge_id):
         abort_if_challenge_doesnt_exist(challenge_id)
-        the_challenge = [challenge for challenge in challenges if challenge['id'] == challenge_id]
+        the_challenge = [challenge for challenge in datasource.challenges if challenge['id'] == challenge_id]
         return challenge['days']
     
