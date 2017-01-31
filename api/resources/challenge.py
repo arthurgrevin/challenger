@@ -1,7 +1,7 @@
 from flask_restful import Resource
 from flask_restful import reqparse, fields, marshal_with, abort
 from datetime import datetime
-import model.challenge_datasource as datasource
+from model import challenge_datasource as datasource
 
 
 parser = reqparse.RequestParser()
@@ -69,7 +69,7 @@ class Challenge(Resource):
         for challenge in datasource.challenges[:]:
             if challenge['id'] == challenge_id:
                 # do something with item
-                challenges.remove(challenge)
+                datasource.challenges.remove(challenge)
         return '', 204
 
 class Days(Resource):

@@ -1,7 +1,6 @@
-import json
-import nose
+import json, nose
 from nose.tools import *
-from ..api import app
+from run import app
 
 test_app = app.test_client()
 
