@@ -31,14 +31,14 @@ def test_get_challenges():
     
 def test_get_one_challenge():
         
-    rv = test_app.get('/challenges/1')
+    rv = test_app.get('/challenges/1/')
     resp = json.loads(rv.data)    
     eq_(rv.status_code, 200)
     eq_(len(resp['challenge']), 1)
     
 def test_delete_one_challenge():
         
-    rv = test_app.delete('/challenges/1')
+    rv = test_app.delete('/challenges/1/')
     eq_(rv.status_code, 204)
     
 def test_get_challenges_length_1():
