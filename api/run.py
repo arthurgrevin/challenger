@@ -1,6 +1,8 @@
 from flask import Flask
 from flask_restful import Api
-from resources.challenge import Challenge, Challenges, Days
+from resources.challenge import Challenge
+from resources.challenges import Challenges
+from resources.days import Days
 
 # Flask app
 app = Flask(__name__)
@@ -10,7 +12,7 @@ api = Api(app)
 
 # add route
 api.add_resource(Challenges, '/challenges/')
-api.add_resource(Challenge, '/challenges/<int:challenge_id>')
+api.add_resource(Challenge, '/challenges/<int:challenge_id>/')
 api.add_resource(Days, '/challenges/<int:challenge_id>/days/')
 
 # main

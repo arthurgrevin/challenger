@@ -9,4 +9,4 @@ Run tests :
     ```nosetests api/test.py -v```
 
 Start the webservice : 
-    ```python api/apy.py```
+    ```python api/run.py```
