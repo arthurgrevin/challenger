@@ -12,7 +12,3 @@ def get_all_dates_between(start, end):
         days.append(start + timedelta(days=i))
     
     return days
-        
-
-days = get_all_dates_between(date(2011,11,17), date(2011,11,24))
-print(days)

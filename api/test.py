@@ -1,8 +1,10 @@
 import json, nose
 from nose.tools import *
 from run import app
+import logging
 
 test_app = app.test_client()
+logger = logging.getLogger("test.debug")
 
 def test_get_challenges_empty():
         
@@ -14,13 +16,20 @@ def test_get_challenges_empty():
 
 def test_post_challenges():
 
-    first_challenge = dict(title="Coding challenge")
-    second_challenge = dict(title="Eating challenge")
+    first_challenge = dict(title = "Coding challenge", start_date = "2017-01-23", end_date = "2017-01-26")
+    second_challenge = dict(title = "Eating challenge", start_date = "2017-01-26", end_date = "2017-01-27")
     
-    rv = test_app.post('/challenges/', data = first_challenge)
+    rv = test_app.post('/challenges/', data = json.dumps(first_challenge), content_type='application/json')
+    resp = json.loads(rv.data)
     eq_(rv.status_code, 201)
-    rv = test_app.post('/challenges/', data = second_challenge)
+    eq_(len(resp), 1)
+    eq_(len(resp['challenge']['days']), 4)
+    
+    rv = test_app.post('/challenges/', data = json.dumps(second_challenge), content_type='application/json')
+    resp = json.loads(rv.data)
     eq_(rv.status_code, 201)
+    eq_(len(resp), 1)
+    eq_(len(resp['challenge']['days']), 2)
     
 def test_get_challenges():
         

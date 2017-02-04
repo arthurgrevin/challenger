@@ -2,25 +2,19 @@ from flask_restful import Resource
 from flask_restful import reqparse, fields, marshal_with, abort
 from datetime import datetime
 from model import challenge_datasource as datasource
-
+import date_util as dateutil
 
 # marshaller
 challenge_fields = {
     'id': fields.Integer,
     'title': fields.String,
-    'nb_days': fields.Integer,
     'start_date': fields.DateTime(dt_format='rfc822'),
-    'end_date': fields.DateTime(dt_format='rfc822')
-}
- 
-# marshaller
-challenge_list_fields = {
-    fields.List(fields.Nested(challenge_fields)),
+    'end_date': fields.DateTime(dt_format='rfc822'), 
+    'days': fields.List(fields.DateTime(dt_format='rfc822'))
 }
 
 parser = reqparse.RequestParser()
 parser.add_argument('title', location = 'json', help = 'Challenge title')
-parser.add_argument('nb_days', type = int, location = 'json', help = 'Number of days for the challenge')
 parser.add_argument('start_date', type = lambda x: datetime.strptime(x, '%Y-%m-%d'), location = 'json', help = 'Challenge start date')
 parser.add_argument('end_date', type = lambda x: datetime.strptime(x, '%Y-%m-%d'), location = 'json', help = 'Challenge end date')
 
@@ -51,11 +45,10 @@ class Challenge(Resource):
         args = parser.parse_args()
         updated_challenge = {
             "id": challenge_id, 
-            "title": args['title'], 
-            "nb_days": args['nb_days'], 
+            "title": args['title'],
             "start_date": args['start_date'],
             "end_date": args['end_date'],
-            "days":[{"21/03/2017": False}]
+            "days": dateutil.get_all_dates_between(args['start_date'], args['end_date'])
         }
         for challenge in datasource.challenges[:]:
             if challenge['id'] == challenge_id:
