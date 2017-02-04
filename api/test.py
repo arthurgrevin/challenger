@@ -11,7 +11,7 @@ def test_get_challenges_empty():
     rv = test_app.get('/challenges/')
     resp = json.loads(rv.data)    
     eq_(rv.status_code, 200)
-    eq_(len(resp['challenge']), 0)
+    eq_(len(resp['challenges']), 0)
     
 
 def test_post_challenges():
@@ -36,7 +36,7 @@ def test_get_challenges():
     rv = test_app.get('/challenges/')
     resp = json.loads(rv.data)    
     eq_(rv.status_code, 200)
-    eq_(len(resp['challenge']), 2)
+    eq_(len(resp['challenges']), 2)
     
 def test_get_one_challenge():
         
@@ -55,4 +55,4 @@ def test_get_challenges_length_1():
     rv = test_app.get('/challenges/')
     resp = json.loads(rv.data)    
     eq_(rv.status_code, 200)
-    eq_(len(resp['challenge']), 1)
+    eq_(len(resp['challenges']), 1)

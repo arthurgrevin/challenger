@@ -20,7 +20,7 @@ parser.add_argument('start_date', type = lambda x: datetime.strptime(x, '%Y-%m-%
 parser.add_argument('end_date', type = lambda x: datetime.strptime(x, '%Y-%m-%d'), location = 'json', help = 'Challenge end date')
 
 class Challenges(Resource):
-    @marshal_with(challenge_fields, envelope='challenge')
+    @marshal_with(challenge_fields, envelope='challenges')
     def get(self):
         # return all challenges
         return datasource.challenges
@@ -29,13 +29,14 @@ class Challenges(Resource):
     def post(self):
         args = parser.parse_args()
         id = datasource.get_next_id()
-        print(args)
+        
         # create challenge object
         if args['start_date'] is not None and args['end_date'] is not None:
             days = dateutil.get_all_dates_between(args['start_date'], args['end_date'])
         else:
             print("days empty")
             days = []
+        
         challenge = {
             "id": id, 
             "title": args['title'],
