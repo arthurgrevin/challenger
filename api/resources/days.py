@@ -5,8 +5,12 @@ from model import challenge_datasource as datasource
 
 
 # marshaller
+day_field = {
+    'day': fields.DateTime(dt_format='rfc822'),
+    'done': fields.Boolean
+}
 days_fields = {
-    'days': fields.List(fields.DateTime(dt_format='rfc822'))
+    'days': fields.List(fields.Nested(day_field))
 }
 
 # abort

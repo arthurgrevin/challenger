@@ -5,12 +5,16 @@ from model import challenge_datasource as datasource
 import date_util as dateutil
 
 # marshaller
+day_field = {
+    'day': fields.DateTime(dt_format='rfc822'),
+    'done': fields.Boolean
+}
 challenge_fields = {
     'id': fields.Integer,
     'title': fields.String,
     'start_date': fields.DateTime(dt_format='rfc822'),
     'end_date': fields.DateTime(dt_format='rfc822'),
-    'days': fields.List(fields.DateTime(dt_format='rfc822'))
+    'days': fields.List(fields.Nested(day_field))
 }
 
 # request parser
