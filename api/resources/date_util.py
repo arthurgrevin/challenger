@@ -12,3 +12,19 @@ def get_all_dates_between(start, end):
         days.append(start + timedelta(days=i))
     
     return days
+
+
+# initialize days with status
+def init_days(start, end):
+
+    days = get_all_dates_between(start, end)
+    init_days = []
+    
+    for day in days:
+        init_day = {
+            "day": day,
+            "done": False
+        }
+        init_days.append(init_day)
+    
+    return init_days

@@ -48,7 +48,7 @@ class Challenge(Resource):
             "title": args['title'],
             "start_date": args['start_date'],
             "end_date": args['end_date'],
-            "days": dateutil.get_all_dates_between(args['start_date'], args['end_date'])
+            "days": dateutil.init_days(args['start_date'], args['end_date'])
         }
         for challenge in datasource.challenges[:]:
             if challenge['id'] == challenge_id:

@@ -32,7 +32,7 @@ class Challenges(Resource):
         
         # create challenge object
         if args['start_date'] is not None and args['end_date'] is not None:
-            days = dateutil.get_all_dates_between(args['start_date'], args['end_date'])
+            days = dateutil.init_days(args['start_date'], args['end_date'])
         else:
             print("days empty")
             days = []
