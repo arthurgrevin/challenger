@@ -1,7 +1,7 @@
 from flask_restful import Resource
 from flask_restful import reqparse, fields, marshal_with
 from datetime import datetime
-from api.model import challenge_datasource as datasource
+from model import challenge_datasource as datasource
 import date_util as dateutil
 
 # marshaller

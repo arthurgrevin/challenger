@@ -1,8 +1,8 @@
 from flask_restful import Resource
 from flask_restful import reqparse, fields, marshal_with, abort
 from datetime import datetime
-from api.model import challenge_datasource as datasource
 import date_util as dateutil
+from model import challenge_datasource as datasource
 
 # marshaller
 day_field = {
